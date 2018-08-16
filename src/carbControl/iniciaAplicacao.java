@@ -373,7 +373,7 @@ static JFrame frmCarbcontrolControle;
 		menu_botao_Sobre.addActionListener(new ActionListener() {  
             public void actionPerformed(ActionEvent arg0) { 
             	ImageIcon icon = new ImageIcon("src/imagens/carbcontrol.png");
-            	JOptionPane.showMessageDialog( null, "Desenvolvido pelos alunos: \n\n*Andrey abreu \n*Bruno Perdigão \n*Glauco Soares \n*Jonatan de Souza \n*Rafael Juliano\n\n"
+            	JOptionPane.showMessageDialog( null, "Desenvolvido por: \n\n*Glauco Soares \n\n"
             			+ "Curso de Análise e Desenvolvimento de Sistemas - USJ", "Sobre carbControl", JOptionPane.INFORMATION_MESSAGE, icon);
             }  
         });
