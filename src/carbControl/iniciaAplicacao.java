@@ -26,6 +26,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 
 public class iniciaAplicacao {
 public static int razaoIC;
@@ -97,10 +98,22 @@ static JFrame frmCarbcontrolControle;
 		frmCarbcontrolControle.setJMenuBar(barra_menu);						//Barra de Menus;
 		
 		JMenu menu_Arquivo = new JMenu("Arquivo");
-		barra_menu.add(menu_Arquivo);										//Arquivo;
+		barra_menu.add(menu_Arquivo);
+		
+		JMenuItem mntmGerenciarAlimentos = new JMenuItem("Gerenciar Alimentos");
+		menu_Arquivo.add(mntmGerenciarAlimentos);
+		
+		JMenuItem mntmGerenciarCategorias = new JMenuItem("Gerenciar Categorias");
+		menu_Arquivo.add(mntmGerenciarCategorias);
 		
 		JMenuItem menu_botao_Sair = new JMenuItem("Sair");
 		menu_Arquivo.add(menu_botao_Sair);									//Arquivo -- Sair;
+		
+		menu_botao_Sair.addActionListener(new ActionListener() {  
+            public void actionPerformed(ActionEvent arg0) {  
+               System.exit(0);
+            }  
+        });
 		
 		JMenu menu_Ajuda = new JMenu("Ajuda");								//Ajuda;
 		barra_menu.add(menu_Ajuda);
@@ -375,12 +388,6 @@ static JFrame frmCarbcontrolControle;
             	ImageIcon icon = new ImageIcon("src/imagens/carbcontrol.png");
             	JOptionPane.showMessageDialog( null, "Desenvolvido por: \n\n*Glauco Soares \n\n"
             			+ "Curso de Análise e Desenvolvimento de Sistemas - USJ", "Sobre carbControl", JOptionPane.INFORMATION_MESSAGE, icon);
-            }  
-        });
-		
-		menu_botao_Sair.addActionListener(new ActionListener() {  
-            public void actionPerformed(ActionEvent arg0) {  
-               System.exit(0);
             }  
         });
 
