@@ -27,6 +27,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import java.awt.Panel;
+import javax.swing.JToolBar;
+import javax.swing.JDesktopPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JPanel;
+import java.awt.CardLayout;
 
 public class iniciaAplicacao {
 public static int razaoIC;
@@ -73,7 +79,11 @@ public static float executaSelect2(Connection conexao, String query) throws SQLE
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {				
 					janelaPrincipal();
-					frmCarbcontrolControle.setVisible(true);					
+					frmCarbcontrolControle.setVisible(true);
+					janelaCadastroUsuario();
+					frmCadastroUsuario.setVisible(false);
+					janelaCadastroAlimento();
+					frmCadastroAlimento.setVisible(false);
 			}	
 		});
 }
@@ -90,7 +100,7 @@ static JFrame frmCarbcontrolControle;
 		frmCarbcontrolControle = new JFrame();
 		frmCarbcontrolControle.setResizable(false);
 		frmCarbcontrolControle.setTitle("carbControl - Controle de Carboidratos");
-		frmCarbcontrolControle.setBounds(600, 200, 510, 557);
+		frmCarbcontrolControle.setBounds(600, 200, 481, 542);
 		frmCarbcontrolControle.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCarbcontrolControle.setIconImage(imgicon.getImage());
 	
@@ -101,10 +111,23 @@ static JFrame frmCarbcontrolControle;
 		barra_menu.add(menu_Arquivo);
 		
 		JMenuItem mntmGerenciarAlimentos = new JMenuItem("Gerenciar Alimentos");
+		mntmGerenciarAlimentos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmCadastroAlimento.setVisible(true);
+			}
+		});
 		menu_Arquivo.add(mntmGerenciarAlimentos);
 		
 		JMenuItem mntmGerenciarCategorias = new JMenuItem("Gerenciar Categorias");
 		menu_Arquivo.add(mntmGerenciarCategorias);
+		
+		JMenuItem mntmGerenciarUsurios = new JMenuItem("Gerenciar Usu\u00E1rios");
+		mntmGerenciarUsurios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmCadastroUsuario.setVisible(true);
+			}
+		});
+		menu_Arquivo.add(mntmGerenciarUsurios);
 		
 		JMenuItem menu_botao_Sair = new JMenuItem("Sair");
 		menu_Arquivo.add(menu_botao_Sair);									//Arquivo -- Sair;
@@ -388,8 +411,54 @@ static JFrame frmCarbcontrolControle;
             	ImageIcon icon = new ImageIcon("src/imagens/carbcontrol.png");
             	JOptionPane.showMessageDialog( null, "Desenvolvido por: \n\n*Glauco Soares \n\n"
             			+ "Curso de Análise e Desenvolvimento de Sistemas - USJ", "Sobre carbControl", JOptionPane.INFORMATION_MESSAGE, icon);
+            	
             }  
         });
 
 	}
+
+static JFrame frmCadastroUsuario;
+//Conteúdo da Janela Cadastro de Usuário;
+	public static void janelaCadastroUsuario() {
+		ImageIcon imgicon = new ImageIcon("src/imagens/carbcontrol.png");
+		
+		
+		frmCadastroUsuario = new JFrame();
+		frmCadastroUsuario.setResizable(false);
+		frmCadastroUsuario.setTitle("carbControl - Cadastro de Usuário");
+		frmCadastroUsuario.setBounds(600, 200, 481, 542);
+		//frmCadastroUsuario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmCadastroUsuario.setIconImage(imgicon.getImage());
+	
+	}
+static JFrame frmCadastroAlimento;
+	//Conteúdo da Janela Cadastro de Alimento;
+		public static void janelaCadastroAlimento() {
+			ImageIcon imgicon = new ImageIcon("src/imagens/carbcontrol.png");
+			
+			
+			frmCadastroAlimento = new JFrame();
+			frmCadastroAlimento.setResizable(false);
+			frmCadastroAlimento.setTitle("carbControl - Cadastro de Alimento");
+			frmCadastroAlimento.setBounds(600, 200, 481, 542);
+			//frmCadastroAlimento.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frmCadastroAlimento.setIconImage(imgicon.getImage());
+		
+		}
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
