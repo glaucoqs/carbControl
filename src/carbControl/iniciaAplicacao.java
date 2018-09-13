@@ -49,7 +49,7 @@ public static float total_insulina;
 
 private static Connection conectaBancoDeDados() throws SQLException {
 	Connection conexao = null;
-	conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/carbcontrol?useSSL=false", "root", "890123");    //Conexão so BD MySQL;
+	conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/carbcontrol?useTimezone=true&serverTimezone=UTC", "root", "root1234");    //Conexão so BD MySQL;
 	return conexao;
 }
 
@@ -113,7 +113,7 @@ static JFrame frmCarbcontrolControle;
 		JMenuItem mntmGerenciarAlimentos = new JMenuItem("Gerenciar Alimentos");
 		mntmGerenciarAlimentos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmCadastroAlimento.setVisible(true);
+				editaCategoria.main(null);
 			}
 		});
 		menu_Arquivo.add(mntmGerenciarAlimentos);
