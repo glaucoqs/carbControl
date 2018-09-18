@@ -80,10 +80,10 @@ public static float executaSelect2(Connection conexao, String query) throws SQLE
 			public void run() {				
 					janelaPrincipal();
 					frmCarbcontrolControle.setVisible(true);
-					janelaCadastroUsuario();
-					frmCadastroUsuario.setVisible(false);
-					janelaCadastroAlimento();
-					frmCadastroAlimento.setVisible(false);
+					//janelaCadastroUsuario();
+					//frmCadastroUsuario.setVisible(false);
+					//janelaCadastroAlimento();
+					//frmCadastroAlimento.setVisible(false);
 			}	
 		});
 }
@@ -113,21 +113,27 @@ static JFrame frmCarbcontrolControle;
 		JMenuItem mntmGerenciarAlimentos = new JMenuItem("Gerenciar Alimentos");
 		mntmGerenciarAlimentos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				editaCategoria.main(null);
+				Alimento.main(null);
+				
 			}
 		});
 		menu_Arquivo.add(mntmGerenciarAlimentos);
 		
 		JMenuItem mntmGerenciarCategorias = new JMenuItem("Gerenciar Categorias");
-		menu_Arquivo.add(mntmGerenciarCategorias);
-		
-		JMenuItem mntmGerenciarUsurios = new JMenuItem("Gerenciar Usu\u00E1rios");
-		mntmGerenciarUsurios.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frmCadastroUsuario.setVisible(true);
+		mntmGerenciarCategorias.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Categoria.main(null);
 			}
 		});
-		menu_Arquivo.add(mntmGerenciarUsurios);
+		menu_Arquivo.add(mntmGerenciarCategorias);
+		
+		JMenuItem menu_botao_GerenciarUsuarios = new JMenuItem("Gerenciar Usu\u00E1rios");
+		menu_botao_GerenciarUsuarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Usuario.main(null);
+			}
+		});
+		menu_Arquivo.add(menu_botao_GerenciarUsuarios);
 		
 		JMenuItem menu_botao_Sair = new JMenuItem("Sair");
 		menu_Arquivo.add(menu_botao_Sair);									//Arquivo -- Sair;
@@ -415,37 +421,7 @@ static JFrame frmCarbcontrolControle;
             }  
         });
 
-	}
-
-static JFrame frmCadastroUsuario;
-//Conteúdo da Janela Cadastro de Usuário;
-	public static void janelaCadastroUsuario() {
-		ImageIcon imgicon = new ImageIcon("src/imagens/carbcontrol.png");
-		
-		
-		frmCadastroUsuario = new JFrame();
-		frmCadastroUsuario.setResizable(false);
-		frmCadastroUsuario.setTitle("carbControl - Cadastro de Usuário");
-		frmCadastroUsuario.setBounds(600, 200, 481, 542);
-		//frmCadastroUsuario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmCadastroUsuario.setIconImage(imgicon.getImage());
-	
-	}
-static JFrame frmCadastroAlimento;
-	//Conteúdo da Janela Cadastro de Alimento;
-		public static void janelaCadastroAlimento() {
-			ImageIcon imgicon = new ImageIcon("src/imagens/carbcontrol.png");
-			
-			
-			frmCadastroAlimento = new JFrame();
-			frmCadastroAlimento.setResizable(false);
-			frmCadastroAlimento.setTitle("carbControl - Cadastro de Alimento");
-			frmCadastroAlimento.setBounds(600, 200, 481, 542);
-			//frmCadastroAlimento.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frmCadastroAlimento.setIconImage(imgicon.getImage());
-		
-		}
-	
+	}	
 	
 	
 }

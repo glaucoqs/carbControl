@@ -164,14 +164,14 @@ ENGINE = InnoDB;
 INSERT INTO carbcontrol.categoria (nome) 
 VALUES 
 
-('cereais_e_derivados'),
-('hortalicas'),
-('frutas'),
-('leguminosas_oleoginosas'),
-('oleos_e_gorduras'),
-('leite_e_derivados'),
-('bebidas'),
-('carnes_e_ovos'),
+('Cereais e derivados'),
+('Hortaliças'),
+('Frutas'),
+('Leguminosas e oleoginosas'),
+('Óleos e gorduras'),
+('Leite e derivados'),
+('Bebidas'),
+('Carnes e ovos'),
 ('pratos_prontos'),
 ('paes_torradas_e_biscoitos'),
 ('fast_food'),

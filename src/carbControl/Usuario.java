@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class editaCategoria extends JFrame {
+public class Usuario extends JFrame {
 
 	private JPanel contentPane;
 
@@ -18,7 +18,7 @@ public class editaCategoria extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					editaCategoria frame = new editaCategoria();
+					Usuario frame = new Usuario();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -30,9 +30,9 @@ public class editaCategoria extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public editaCategoria() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+	public Usuario() {
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 159, 446);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
