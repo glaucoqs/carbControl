@@ -100,7 +100,7 @@ static JFrame frmCarbcontrolControle;
 		frmCarbcontrolControle = new JFrame();
 		frmCarbcontrolControle.setResizable(false);
 		frmCarbcontrolControle.setTitle("carbControl - Controle de Carboidratos");
-		frmCarbcontrolControle.setBounds(600, 200, 481, 542);
+		frmCarbcontrolControle.setBounds(600, 200, 490, 567);
 		frmCarbcontrolControle.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCarbcontrolControle.setIconImage(imgicon.getImage());
 	
