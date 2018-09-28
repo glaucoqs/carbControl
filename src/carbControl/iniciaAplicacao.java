@@ -47,7 +47,7 @@ public static float porcao;
 public static float total_carb;
 public static float total_insulina;
 
-private static Connection conectaBancoDeDados() throws SQLException {
+public static Connection conectaBancoDeDados() throws SQLException {
 	Connection conexao = null;
 	conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/carbcontrol?useTimezone=true&serverTimezone=UTC", "root", "root1234");    //Conexão so BD MySQL;
 	return conexao;
@@ -73,6 +73,21 @@ public static float executaSelect2(Connection conexao, String query) throws SQLE
 	return retorno;		
 }
 
+
+
+public static void executaUpdate(Connection conexao, String query) throws SQLException {
+	PreparedStatement ps = conexao.prepareStatement(query);
+	ps.executeUpdate(query);																					//Update BD MySQL;	
+}
+
+
+
+
+
+
+
+
+
 //Método Main;
 
 	public static void main(String[] args) {
@@ -80,10 +95,6 @@ public static float executaSelect2(Connection conexao, String query) throws SQLE
 			public void run() {				
 					janelaPrincipal();
 					frmCarbcontrolControle.setVisible(true);
-					//janelaCadastroUsuario();
-					//frmCadastroUsuario.setVisible(false);
-					//janelaCadastroAlimento();
-					//frmCadastroAlimento.setVisible(false);
 			}	
 		});
 }
