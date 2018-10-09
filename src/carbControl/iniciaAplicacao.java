@@ -33,16 +33,21 @@ import javax.swing.JDesktopPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import java.awt.CardLayout;
+import javax.swing.JComboBox;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class iniciaAplicacao {
 public static int razaoIC;
 public static List<Object> categoria;
 public static List<Object> alimento;
 public static List<Object> medida_caseira;
+public static List<Object> usuarios;
 public static String categoria_escolhida;
 public static String alimento_escolhido;
 public static String quantidade_escolhida;
 public static String alimento_quantidade;
+public static String usuario_escolhido;
 public static float porcao;
 public static float total_carb;
 public static float total_insulina;
@@ -73,17 +78,26 @@ public static float executaSelect2(Connection conexao, String query) throws SQLE
 	return retorno;		
 }
 
-
+public static float executaSelect3(Connection conexao, String query) throws SQLException {
+	int retorno = 0;
+	PreparedStatement ps = conexao.prepareStatement(query);
+	ResultSet rs = ps.executeQuery();																					//Select BD MySQL (Retorno de float);
+	
+	while(rs.next()){
+		retorno=(int) (rs.getInt(1));
+	}
+	return retorno;		
+}
 
 public static void executaUpdate(Connection conexao, String query) throws SQLException {
 	PreparedStatement ps = conexao.prepareStatement(query);
 	ps.executeUpdate(query);																					//Update BD MySQL;	
 }
 
-
-
-
-
+public static void executaInsert(Connection conexao, String query) throws SQLException {
+	PreparedStatement ps = conexao.prepareStatement(query);
+	ps.execute(query);																			//Update BD MySQL;	
+}
 
 
 
@@ -95,6 +109,12 @@ public static void executaUpdate(Connection conexao, String query) throws SQLExc
 			public void run() {				
 					janelaPrincipal();
 					frmCarbcontrolControle.setVisible(true);
+					try {
+						usuarios  = executaSelect(conectaBancoDeDados(), "SELECT * FROM usuario order by nome");
+					} catch (SQLException e2) {
+						
+						e2.printStackTrace();
+					}
 			}	
 		});
 }
@@ -107,17 +127,14 @@ static JFrame frmCarbcontrolControle;
 		
 		ImageIcon imgicon = new ImageIcon("src/imagens/carbcontrol.png");
 		
-		
 		frmCarbcontrolControle = new JFrame();
 		frmCarbcontrolControle.setResizable(false);
 		frmCarbcontrolControle.setTitle("carbControl - Controle de Carboidratos");
 		frmCarbcontrolControle.setBounds(600, 200, 490, 567);
 		frmCarbcontrolControle.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCarbcontrolControle.setIconImage(imgicon.getImage());
-	
 		JMenuBar barra_menu = new JMenuBar();
 		frmCarbcontrolControle.setJMenuBar(barra_menu);						//Barra de Menus;
-		
 		JMenu menu_Arquivo = new JMenu("Arquivo");
 		barra_menu.add(menu_Arquivo);
 		
@@ -180,18 +197,6 @@ static JFrame frmCarbcontrolControle;
 		label_alimento.setBounds(10, 152, 202, 24);
 		frmCarbcontrolControle.getContentPane().add(label_alimento);
 		
-		Label label_razao = new Label("Raz\u00E3o Insulina/Carboidratos (I/C)");
-		label_razao.setBounds(10, 20, 202, 24);
-		frmCarbcontrolControle.getContentPane().add(label_razao);
-		
-		TextField entrada_razao_ic = new TextField();
-		entrada_razao_ic.setBounds(10, 50, 46, 24);
-		frmCarbcontrolControle.getContentPane().add(entrada_razao_ic);
-						
-		Label label_exemplo = new Label("Ex: 15");
-		label_exemplo.setBounds(62, 50, 46, 24);
-		frmCarbcontrolControle.getContentPane().add(label_exemplo);
-		
 		Label label_medida_caseira = new Label("Medida Caseira");
 		label_medida_caseira.setBounds(10, 210, 202, 24);
 		frmCarbcontrolControle.getContentPane().add(label_medida_caseira);
@@ -250,16 +255,36 @@ static JFrame frmCarbcontrolControle;
 		
 		JButton botaook_razaoIC = new JButton("Ok");
 		botaook_razaoIC.setToolTipText("");
-		botaook_razaoIC.setBounds(114, 50, 57, 22);
+		botaook_razaoIC.setBounds(316, 56, 57, 22);
 		frmCarbcontrolControle.getContentPane().add(botaook_razaoIC);
 		
 		Button botao_zerar = new Button("Limpar");
 		botao_zerar.setBounds(10, 454, 79, 24);
 		frmCarbcontrolControle.getContentPane().add(botao_zerar);
 		
+		Choice escolha_usuario = new Choice();
+		escolha_usuario.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				
+				escolha_usuario.removeAll();
+				for (Object usuarios : usuarios) {
+					escolha_usuario.addItem(usuarios.toString());										//Carrega lista das Categorias.
+					}
+			}
+		});
+		
+		escolha_usuario.setBounds(10, 52, 289, 26);
+		frmCarbcontrolControle.getContentPane().add(escolha_usuario);
+		
+		Label label = new Label("Nome");
+		label.setBounds(10, 22, 202, 24);
+		frmCarbcontrolControle.getContentPane().add(label);
+		
 		botao_calcular.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DecimalFormat df =  new DecimalFormat("0.0");
+				
 				total_insulina = total_carb/razaoIC;
 				label_unidades.setVisible(true);
 				label_unidades.setText(String.valueOf(String.valueOf(df.format(total_insulina)) + " Unidade(s)"));
@@ -284,7 +309,6 @@ static JFrame frmCarbcontrolControle;
 					
 					total_carb = total_carb + (porcao *(float)spinner_quantidade.getValue());
 					botao_calcular.setEnabled(true);				
-					entrada_razao_ic.setEnabled(false);
 					botaook_razaoIC.setEnabled(false);
 					escolha_categoria.requestFocus();
 					escolha_alimento.removeAll();
@@ -308,15 +332,31 @@ static JFrame frmCarbcontrolControle;
 		botaook_razaoIC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-					do{
-						razaoIC = Integer.parseInt(entrada_razao_ic.getText());	
-						if (razaoIC <= 0 || razaoIC >25){
-							JOptionPane.showMessageDialog(null, "Digite um número entre 1 e 25!");
-							entrada_razao_ic.setText("");												//Validação de entrada Razão IC.
-							entrada_razao_ic.requestFocus();
+					
+						usuario_escolhido = (String) escolha_usuario.getSelectedItem();
+						
+						StringBuffer strBuf = new StringBuffer();
+						strBuf.append("select razao_ic from carbcontrol.usuario where usuario.nome = '");
+						strBuf.append(usuario_escolhido);												//Concatenação fomando codigo select do mySQL.
+						strBuf.append("';");
+						usuario_escolhido = strBuf.toString();
+						
+						System.out.println(razaoIC);
+						
+						
+						
+						try {
+							razaoIC = (int) executaSelect3(conectaBancoDeDados(),usuario_escolhido);
+							System.out.println(razaoIC);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						}
-					}while(razaoIC <= 0 || razaoIC >25);
-								
+						
+						
+						
+						
+						
 				escolha_categoria.setEnabled(true);
 				try {
 					categoria  = executaSelect(conectaBancoDeDados(), "SELECT * FROM categoria order by nome");
@@ -365,9 +405,6 @@ static JFrame frmCarbcontrolControle;
 		
 		botao_zerar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				entrada_razao_ic.setEnabled(true);
-				entrada_razao_ic.setText("");
-				entrada_razao_ic.requestFocus();
 				botaook_razaoIC.setEnabled(true);
 				escolha_categoria.removeAll();
 				escolha_categoria.setEnabled(false);
@@ -433,8 +470,6 @@ static JFrame frmCarbcontrolControle;
         });
 
 	}	
-	
-	
 }
 
 

@@ -30,7 +30,7 @@ import java.awt.event.ActionEvent;
 public class Categoria extends JFrame {
 	
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txt_nova_cat;
 	private JTextField textField_1;
 	public static List<Object> categoria;
 	private String nomeCatAntiga;
@@ -69,6 +69,7 @@ public class Categoria extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 539, 196);
@@ -158,12 +159,8 @@ public class Categoria extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 				comboBox.removeAll();
 				textField_1.setText("");
-				
-				
-				
 			}
 		});
 		btnSalvar.setBounds(250, 83, 115, 29);
@@ -173,37 +170,39 @@ public class Categoria extends JFrame {
 		tabbedPane.addTab("Nova Categoria", null, panel_1, null);
 		panel_1.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(8, 48, 217, 26);
-		panel_1.add(textField);
-		textField.setColumns(10);
+		txt_nova_cat = new JTextField();
+		txt_nova_cat.setBounds(8, 48, 217, 26);
+		panel_1.add(txt_nova_cat);
+		txt_nova_cat.setColumns(10);
 		
-		JButton btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.addActionListener(new ActionListener() {
+		JButton btnAdicionar_cat = new JButton("Adicionar");
+		btnAdicionar_cat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				
-				
-				
-				
-				do{
-					novaCategoria = textField.getText();	
-					if (novaCategoria == ""){
+				novaCategoria = txt_nova_cat.getText();	
+				System.out.println(novaCategoria);
+				if (txt_nova_cat.getText().length() == 0){
 						JOptionPane.showMessageDialog(null, "Digite um nome para a Categoria!");
-																		//Validação de entrada Razão IC.
-						textField.requestFocus();
-					}
-				}while(novaCategoria != "");
+				}else {
+						JOptionPane.showMessageDialog(null, "Categoria adicionada!");
+				}
 				
-				
-				
-				
-				
-				
+				StringBuffer strBuf = new StringBuffer();
+				strBuf.append("INSERT INTO `carbcontrol`.`categoria` (`nome`) VALUES ('");
+				strBuf.append(novaCategoria);												//Concatenação fomando codigo select do mySQL.
+				strBuf.append("');");
+				String insertBd = strBuf.toString();
+				try {
+					iniciaAplicacao.executaInsert(iniciaAplicacao.conectaBancoDeDados(), insertBd);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				txt_nova_cat.requestFocus();
+				txt_nova_cat.setText("");
 			}
 		});
-		btnAdicionar.setBounds(250, 47, 115, 29);
-		panel_1.add(btnAdicionar);
+		btnAdicionar_cat.setBounds(250, 47, 115, 29);
+		panel_1.add(btnAdicionar_cat);
 		
 		Label label_1 = new Label("Nova Categoria");
 		label_1.setBounds(8, 10, 200, 24);

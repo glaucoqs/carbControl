@@ -12,6 +12,11 @@ import javax.swing.JTextField;
 import java.awt.Choice;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import java.awt.List;
+import java.awt.Canvas;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Usuario extends JFrame {
 
@@ -30,6 +35,8 @@ public class Usuario extends JFrame {
 	private JTextField textField_11;
 	private JTextField textField_12;
 	private JTextField textField_13;
+	private JTextField textField_14;
+	private JTextField textField_15;
 
 	/**
 	 * Launch the application.
@@ -51,16 +58,18 @@ public class Usuario extends JFrame {
 	 * Create the frame.
 	 */
 	public Usuario() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Usuario.class.getResource("/imagens/carbcontrol.png")));
+		setTitle("Gerenciar Usu\u00E1rios");
 		setResizable(false);
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 449, 419);
+		setBounds(100, 100, 450, 405);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 428, 362);
+		tabbedPane.setBounds(0, 0, 443, 363);
 		contentPane.add(tabbedPane);
 		
 		JPanel panel = new JPanel();
@@ -228,6 +237,65 @@ public class Usuario extends JFrame {
 		textField_1.setColumns(10);
 		textField_1.setBounds(189, 171, 51, 26);
 		panel_2.add(textField_1);
+		
+		JPanel panel_3 = new JPanel();
+		tabbedPane.addTab("Relat\u00F3rio", null, panel_3, null);
+		panel_3.setLayout(null);
+		
+		Label label_16 = new Label("Nome");
+		label_16.setBounds(15, 10, 202, 24);
+		panel_3.add(label_16);
+		
+		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.setBounds(15, 40, 281, 26);
+		panel_3.add(comboBox_2);
+		
+		List list = new List();
+		list.setBounds(15, 198, 413, 121);
+		panel_3.add(list);
+		
+		JButton btnGerarRelatrio = new JButton("Gerar");
+		btnGerarRelatrio.setBounds(313, 39, 115, 29);
+		panel_3.add(btnGerarRelatrio);
+		
+		Label label_17 = new Label("In\u00EDcio");
+		label_17.setBounds(15, 87, 102, 24);
+		panel_3.add(label_17);
+		
+		Label label_18 = new Label("T\u00E9rmino");
+		label_18.setBounds(149, 87, 202, 24);
+		panel_3.add(label_18);
+		
+		textField_14 = new JTextField();
+		textField_14.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				textField_14.setText("");
+			}
+		});
+		textField_14.setText("__ /__ /____");
+		textField_14.setColumns(10);
+		textField_14.setBounds(15, 117, 102, 26);
+		panel_3.add(textField_14);
+		
+		textField_15 = new JTextField();
+		textField_15.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				textField_15.setText("");
+			}
+		});
+		textField_15.setText("__ /__ /____");
+		textField_15.setColumns(10);
+		textField_15.setBounds(149, 117, 102, 26);
+		panel_3.add(textField_15);
+		
+		Label label_19 = new Label("Data");
+		label_19.setBounds(15, 168, 102, 24);
+		panel_3.add(label_19);
+		
+		Label label_20 = new Label("Dose de Insulina Aplicada (UI)");
+		label_20.setBounds(149, 168, 223, 24);
+		panel_3.add(label_20);
 	}
-
 }
