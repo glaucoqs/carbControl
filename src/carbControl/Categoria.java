@@ -26,6 +26,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.HierarchyListener;
+import java.awt.event.HierarchyEvent;
 
 public class Categoria extends JFrame {
 	
@@ -46,9 +48,8 @@ public class Categoria extends JFrame {
 				try {
 					Categoria frame = new Categoria();
 					frame.setVisible(true);
-					
-					
-				
+					//frame.setAlwaysOnTop(true);
+					frame.getFocusOwner();
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,6 +62,11 @@ public class Categoria extends JFrame {
 	 * Create the frame.
 	 */
 	public Categoria() {
+		addHierarchyListener(new HierarchyListener() {
+			public void hierarchyChanged(HierarchyEvent arg0) {
+				contentPane.requestFocusInWindow();
+			}
+		});
 		setTitle("Gerenciar Categorias");
 		setResizable(false);
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,6 +75,7 @@ public class Categoria extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
 		
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -184,18 +191,17 @@ public class Categoria extends JFrame {
 						JOptionPane.showMessageDialog(null, "Digite um nome para a Categoria!");
 				}else {
 						JOptionPane.showMessageDialog(null, "Categoria adicionada!");
-				}
-				
-				StringBuffer strBuf = new StringBuffer();
-				strBuf.append("INSERT INTO `carbcontrol`.`categoria` (`nome`) VALUES ('");
-				strBuf.append(novaCategoria);												//Concatenação fomando codigo select do mySQL.
-				strBuf.append("');");
-				String insertBd = strBuf.toString();
-				try {
-					iniciaAplicacao.executaInsert(iniciaAplicacao.conectaBancoDeDados(), insertBd);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+						StringBuffer strBuf = new StringBuffer();
+						strBuf.append("INSERT INTO `carbcontrol`.`categoria` (`nome`) VALUES ('");
+						strBuf.append(novaCategoria);												//Concatenação fomando codigo select do mySQL.
+						strBuf.append("');");
+						String insertBd = strBuf.toString();
+						try {
+							iniciaAplicacao.executaInsert(iniciaAplicacao.conectaBancoDeDados(), insertBd);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 				}
 				txt_nova_cat.requestFocus();
 				txt_nova_cat.setText("");
